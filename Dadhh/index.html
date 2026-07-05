@@ -585,7 +585,7 @@ document.addEventListener('keydown',function(e){
   function init(){
     if(typeof Peer==='undefined'){if(tries++<8)return setTimeout(init,700);return;}
     badge('Control remoto: conectando…',false);
-    var peer;try{peer=new Peer(PEER_ID,{debug:0});}catch(e){badge('Remoto no disponible',false);return;}
+    var peer;try{peer=new Peer(PEER_ID,{debug:0,config:{iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"},{urls:"turn:openrelay.metered.ca:80",username:"openrelayproject",credential:"openrelayproject"},{urls:"turn:openrelay.metered.ca:443",username:"openrelayproject",credential:"openrelayproject"},{urls:"turn:openrelay.metered.ca:443?transport=tcp",username:"openrelayproject",credential:"openrelayproject"}]}});}catch(e){badge('Remoto no disponible',false);return;}
     peer.on('open',function(){badge('Listo para control remoto',true);});
     peer.on('disconnected',function(){try{peer.reconnect();}catch(e){}});
     peer.on('error',function(e){badge('Remoto: '+((e&&e.type)||'error'),false);});
